@@ -1,0 +1,156 @@
+
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <title>عيد أضحى مبارك</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Amiri&display=swap');
+    body {
+      margin: 0;
+      padding: 0;
+      background: linear-gradient(to top right, #1d2671, #c33764);
+      font-family: 'Amiri', serif;
+      color: #fff;
+      text-align: center;
+      overflow-x: hidden;
+    }
+    .stars {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      top: 0;
+      left: 0;
+      z-index: 0;
+    }
+    .star {
+      position: absolute;
+      background: white;
+      border-radius: 50%;
+      opacity: 0.7;
+      box-shadow: 0 0 10px #fff;
+      animation: flicker 3s infinite ease-in-out;
+    }
+    @keyframes flicker {
+      0%, 100% { opacity: 0.3; transform: scale(0.8); }
+      50% { opacity: 1; transform: scale(1.1); }
+    }
+    .container {
+      position: relative;
+      z-index: 1;
+      padding: 80px 20px 40px;
+    }
+    .moon {
+      width: 200px;
+      height: 200px;
+      margin: 20px auto;
+      background: radial-gradient(circle at 30% 30%, gold, #fff59d);
+      border-radius: 50%;
+      box-shadow: -50px 0 0 0 rgba(0,0,0,0.7) inset, 0 0 30px gold;
+    }
+    h1 {
+      font-size: 2.5em;
+      margin-top: 10px;
+      color: #fff;
+      text-shadow: 2px 2px 5px #000;
+    }
+    .arabic-calligraphy {
+      font-size: 2.2em;
+      color: #ffeb3b;
+      font-weight: bold;
+      margin: 10px 0;
+      text-shadow: 2px 2px 8px #000;
+    }
+    .share-box {
+      margin-top: 30px;
+    }
+    input {
+      padding: 12px;
+      width: 70%;
+      max-width: 300px;
+      border-radius: 8px;
+      border: none;
+      margin-bottom: 10px;
+      font-size: 1em;
+    }
+    button {
+      padding: 12px 25px;
+      border: none;
+      border-radius: 8px;
+      background: gold;
+      color: #000;
+      font-weight: bold;
+      cursor: pointer;
+      font-size: 1em;
+      box-shadow: 0 0 10px gold;
+    }
+    button:hover {
+      background: #ffeb3b;
+    }
+    .share-link {
+      margin-top: 20px;
+      padding: 10px;
+      background: rgba(255, 255, 255, 0.2);
+      border: 1px dashed #fff;
+      border-radius: 10px;
+      word-wrap: break-word;
+    }
+    @media (max-width: 600px) {
+      .moon {
+        width: 150px;
+        height: 150px;
+      }
+      h1, .arabic-calligraphy {
+        font-size: 1.5em;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="stars" id="stars-container"></div>
+  <div class="container">
+    <div class="moon"></div>
+    <div class="arabic-calligraphy">عيد أضحى مبارك</div>
+    <h1>Wishing You a Happy Eid al-Adha 🌙</h1>
+
+    <div class="share-box">
+      <p>أدخل اسمك لإرسال تهنئة خاصة</p>
+      <input type="text" id="yourName" placeholder="اكتب اسمك هنا">
+      <br>
+      <button onclick="generateLink()">إنشاء رابط</button>
+      <div class="share-link" id="linkBox" style="display:none;"></div>
+    </div>
+  </div>
+
+  <script>
+    const starContainer = document.getElementById('stars-container');
+    for (let i = 0; i < 60; i++) {
+      const star = document.createElement('div');
+      star.classList.add('star');
+      const size = Math.random() * 25 + 10;
+      star.style.width = `${size}px`;
+      star.style.height = `${size}px`;
+      star.style.top = `${Math.random() * 100}%`;
+      star.style.left = `${Math.random() * 100}%`;
+      starContainer.appendChild(star);
+    }
+
+    function generateLink() {
+      const name = document.getElementById('yourName').value.trim();
+      if (!name) return alert('يرجى إدخال اسمك أولاً!');
+      const link = `${window.location.origin}{window.location.pathname}?from=${encodeURIComponent(name)}`;
+      const linkBox = document.getElementById('linkBox');
+      linkBox.innerHTML = `<strong>انسخ هذا الرابط وشاركه:</strong><br>${link}`;
+      linkBox.style.display = 'block';
+    }
+
+    const urlParams = new URLSearchParams(window.location.search);
+    const sender = urlParams.get('from');
+    if (sender) {
+      document.querySelector('h1').innerHTML = `${sender} يهنئك بـ عيد أضحى مبارك 🌙`;
+    }
+  </script>
+</body>
+</html>
